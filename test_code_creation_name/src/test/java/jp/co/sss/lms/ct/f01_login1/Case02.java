@@ -39,6 +39,12 @@ public class Case02 {
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
 		goTo("http://localhost:8080/lms");
+
+		WebElement login = webDriver.findElement(By.tagName("h2"));
+		assertEquals("ログイン", login.getText());
+
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
