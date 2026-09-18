@@ -10,6 +10,8 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト ログイン機能①
@@ -40,7 +42,8 @@ public class Case01 {
 		//ログイン画面遷移
 		goTo("http://localhost:8080/lms");
 
-		assertEquals("http://localhost:8080/lms/", webDriver.getCurrentUrl());
+		WebElement login = webDriver.findElement(By.tagName("h2"));
+		assertEquals("ログイン", login.getText());
 
 		getEvidence(new Object() {
 		});
