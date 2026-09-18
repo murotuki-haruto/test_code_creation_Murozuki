@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f01_login1;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -45,12 +46,25 @@ public class Case02 {
 	@DisplayName("テスト02 DBに登録されていないユーザーでログイン")
 	void test02() {
 		//ID
-		webDriver.findElement(By.id("loginId")).sendKeys("AAA");
-		//パスワード
-		webDriver.findElement(By.id("password")).sendKeys("AAA");
+		WebElement id = webDriver.findElement(By.id("loginId"));
+		id.clear();
+		id.sendKeys("AAA");
+
+		//pass
+		WebElement pass = webDriver.findElement(By.id("password"));
+		pass.clear();
+		pass.sendKeys("AAA");
+
 		//ログインボタン
 		WebElement loginButton = webDriver.findElement(By.className("btn-primary"));
 		loginButton.click();
+
+		// エラーメッセージが表示されるまで待っている
+		visibilityTimeout(By.className("help-inline"), 5);
+
+		//エラーチェック
+		WebElement erroMesseg = webDriver.findElement(By.className("help-inline"));
+		assertEquals("* ログインに失敗しました。", erroMesseg.getText());
 
 		getEvidence(new Object() {
 		});
