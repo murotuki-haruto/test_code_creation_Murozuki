@@ -76,48 +76,40 @@ public class Case04 {
 
 	@Test
 	@Order(3)
-	@DisplayName("テスト03 上部メニューの「ヘルプ」リンクからヘルプ画面に遷移")
+	@DisplayName("テスト03 「ヘルプ」リンクからヘルプ画面に遷移")
 	void test03() {
-		//機能メニュー押下
+
+		//ヘルプリンクを押下
 		WebElement function = webDriver.findElement(By.linkText("機能"));
 		function.click();
-
-		//機能メニューからヘルプ表示されるかチェック
 		WebElement help = webDriver.findElement(By.linkText("ヘルプ"));
-		assertEquals("ヘルプ", help.getText());
+		help.click();
+
+		//ヘルプ画面表示確認
+		WebElement helpScreen = webDriver.findElement(By.tagName("h2"));
+		assertEquals("ヘルプ", helpScreen.getText());
 
 		getEvidence(new Object() {
 		});
-
 	}
 
 	@Test
 	@Order(4)
-	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面を別タブに開く")
+	@DisplayName("テスト04 「よくある質問」リンクからよくある質問画面に遷移")
 	void test04() {
-		//ヘルプ押下
-		WebElement helpLink = webDriver.findElement(By.linkText("ヘルプ"));
-		helpLink.click();
 
-		//ヘルプ画面の表示確認
-		WebElement heipscreen = webDriver.findElement(By.tagName("h2"));
-		assertEquals("ヘルプ", heipscreen.getText());
-
-		getEvidence(new Object() {
-		});
-	}
-
-	@Test
-	@Order(5)
-	@DisplayName("テスト05 「よくある質問」リンクを押下")
-	void test05() {
-
-		// よくある質問リンクを押下
+		// よくある質問リンク押下
 		WebElement question = webDriver.findElement(By.linkText("よくある質問"));
 		question.click();
 
-		// 別タブが開いたことを確認
-		assertEquals(2, webDriver.getWindowHandles().size());
+		// よくある質問画面が別タブで開くため、表示された画面に切り替える必要があるので以下の処理を追加
+		for (String window : webDriver.getWindowHandles()) {
+			webDriver.switchTo().window(window);
+		}
+
+		// よくある質問画面表示確認
+		WebElement questionScreen = webDriver.findElement(By.tagName("h2"));
+		assertEquals("よくある質問", questionScreen.getText());
 
 		getEvidence(new Object() {
 		});
