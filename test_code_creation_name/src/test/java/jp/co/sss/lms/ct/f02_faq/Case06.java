@@ -143,7 +143,7 @@ public class Case06 {
 
 		// 回答表示確認
 		WebElement answer = webDriver.findElement(By.tagName("dd"));
-		assertEquals("fs18", answer.getAttribute("class"));
+		assertTrue(answer.isDisplayed());
 
 		getEvidence(new Object() {
 		});
