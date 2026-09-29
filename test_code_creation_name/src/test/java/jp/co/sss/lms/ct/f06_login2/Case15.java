@@ -1,6 +1,7 @@
 package jp.co.sss.lms.ct.f06_login2;
 
 import static jp.co.sss.lms.ct.util.WebDriverUtils.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 /**
  * 結合テスト ログイン機能②
@@ -35,21 +38,48 @@ public class Case15 {
 	@Order(1)
 	@DisplayName("テスト01 トップページURLでアクセス")
 	void test01() {
-		// TODO ここに追加
+		goTo("http://localhost:8080/lms");
+		WebElement login = webDriver.findElement(By.tagName("h2"));
+		assertEquals("ログイン", login.getText());
+
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(2)
 	@DisplayName("テスト02 DBに初期登録された未ログインの受講生ユーザーでログイン")
 	void test02() {
-		// TODO ここに追加
+		WebElement id = webDriver.findElement(By.id("loginId"));
+		id.clear();
+		id.sendKeys("StudentAA03");
+
+		WebElement pass = webDriver.findElement(By.id("password"));
+		pass.clear();
+		pass.sendKeys("StudentAA03");
+
+		WebElement loginButton = webDriver.findElement(By.className("btn-primary"));
+		loginButton.click();
+
+		WebElement useLule = webDriver.findElement(By.tagName("h2"));
+		assertEquals("利用規約", useLule.getText());
+
+		getEvidence(new Object() {
+		});
 	}
 
 	@Test
 	@Order(3)
 	@DisplayName("テスト03 「同意します」チェックボックスにチェックをせず「次へ」ボタンを押下")
 	void test03() {
-		// TODO ここに追加
+		WebElement next = webDriver.findElement(By.className("btn-primary"));
+		next.click();
+
+		WebElement erroMesseg = webDriver.findElement(By.className("error"));
+		assertEquals("セキュリティ規約への同意は必須です。", erroMesseg.getText());
+
+		getEvidence(new Object() {
+		});
 	}
 
 }
